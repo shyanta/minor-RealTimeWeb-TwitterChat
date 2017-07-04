@@ -12,7 +12,7 @@ expect, and as a frontend developer this is what should trigger you.
 
 ## Live Link
 The live chat can be found on the following link: <br/>
-[Live Chatroom with Socket.io](https://minor-realtimeweb.herokuapp.com/)
+[Live Chatroom with Socket.io](https://minor-realtimeweb-twitterchat.herokuapp.com/)
 
 ## What did I make
 For this project we worked with socket.io. I made a chat app, working with socket.io.

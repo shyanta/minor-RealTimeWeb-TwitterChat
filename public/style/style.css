@@ -21,6 +21,27 @@ header h1 {
 	color: white;
 }
 
+#connection.visible{
+	display: block;
+}
+#connection {
+	display: none;
+	align-items: center;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	background-color: #b72c37;
+	text-align: center;
+	width: 100%;
+	padding: 2em 1em;
+	margin: 0 auto;
+	color: #fff;
+}
+	#connection a {
+		color: #3f337d;
+		font-weight: bold;
+	}
+
 #user.visible {
 	display: flex;
 }

@@ -1,14 +1,15 @@
-var socket = io();
 var form = document.getElementById('message_form');
 var message = document.getElementById('field-message');
 var messages = document.getElementById('messages');
 var listItem = document.querySelector('li');
 var userNameInput = document.getElementById('username');
-
+var noConnection = document.getElementById('connection');
 var userSection = document.getElementById('user');
 var userForm = document.getElementById('user_form');
-	userSection.setAttribute("class", "");
+
 var username = undefined;
+var socket = io();
+userSection.setAttribute("class", "");
 
 if (username === undefined){
 	userSection.setAttribute("class", "visible");
@@ -17,8 +18,22 @@ if (username === undefined){
 		username = userNameInput.value;
 		userNameInput.value="";
 		userSection.setAttribute("class","");
+        var status = 'joined';
+        socket.emit('notification', username, status);
 	})
 }
+
+socket.on('connect', function(){
+	userSection.setAttribute("class","visible");
+	noConnection.removeAttribute("class", "visible");
+	messages.innerHTML = "";
+})
+socket.on('disconnect', function() {
+	noConnection.setAttribute("class", "visible");
+	console.log('disconnected');
+    var status = 'left';
+    socket.emit('notification', username, status);
+})
 
 form.addEventListener('submit', function(){
 	event.preventDefault();
@@ -26,6 +41,11 @@ form.addEventListener('submit', function(){
 	message.value = "";
 	return false;
 });
+
+socket.on('notification', function(name, status) {
+    console.log(status);
+    messages.innerHTML += '<span class="notificaton">' + name + ' '+ status + ' the room</span>'
+})
 
 
 socket.on('chat message', function(msg, name, id){
@@ -48,6 +68,8 @@ socket.on('chat message', function(msg, name, id){
 		}
 
 	messages.innerHTML += '<li data-status="' + status + '"><header>'+ name + ' says:</header><p>' + msg + '</p><footer><p> Posted on '+ days[day] + ', ' + hour + ':' + minute + '</footer></li>';
+
+    console.log(msg);
 
 	messages.scrollTop = messages.scrollHeight;
 });

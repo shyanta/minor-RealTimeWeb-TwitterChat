@@ -33,11 +33,19 @@ var twitter = new Twit({
   access_token_secret: process.env.TWITTER_TOKEN_SECRET
 });
 
+// twitter.get('search/tweets', { q: query + ' since:2011-07-11', count: 100 }, function(err, data, response) {
+//     console.log(data)
+// })
+
 io.on('connection', function(socket){
-	console.log('a user connected');
-	socket.on('disconnect', function(){
-		console.log('user disconnected');
-	});
+    socket.on('notification', function(username, status) {
+        socket.on('disconnect', function() {
+            console.log('a user disconnected');
+            io.emit('notification', username, 'left')
+        });
+        console.log('a user ' + status);
+        io.emit('notification', username, status)
+    });
 	socket.on('chat message', function(msg, name){
 		io.emit('chat message', msg, name, this.id);
 		console.log('message: ' + msg);
