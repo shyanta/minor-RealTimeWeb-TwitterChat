@@ -1,0 +1,30 @@
+{
+  "name": "realtimeweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "http": "0.0.0",
+    "nodemon": "^1.11.0",
+    "path": "^0.12.7",
+    "socket.io": "^1.7.3",
+    "twit": "^2.2.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shyanta/minor-RealTimeWeb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shyanta/minor-RealTimeWeb/issues"
+  },
+  "homepage": "https://github.com/shyanta/minor-RealTimeWeb#readme"
+}

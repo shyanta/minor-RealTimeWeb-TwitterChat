@@ -1,0 +1,208 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font: 13px Helvetica, Arial;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+header h1 {
+	margin: 0;
+	padding: 0;
+	line-height: 2;
+	width: 100%;
+	text-align: center;
+	background-color: #004346;
+	color: white;
+}
+
+#user.visible {
+	display: flex;
+}
+#user {
+	display: none;
+	align-items: center;
+	height: 100%;
+	height: 100vh;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,0.4)
+}
+#user form{
+	background-color: #dae1e5;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	border-radius: 10px;
+	width: 85%;
+	max-width: 20em;
+	padding: 1em;
+	margin: 0 auto;
+}
+	#user form label {
+		flex-basis: 100%;
+		font-size: 1.2em;
+		margin-bottom: .2em;
+	}
+	#user form input {
+		flex-basis: 100%;
+		line-height: 2;
+		font-size: 16px;
+		height: 2em;
+		border: 0;
+		border-radius: 5px;
+		margin: 0 0 .8em 0;
+	}
+		#user form input:focus{
+			outline-style: none;
+			box-shadow: 0 0 .5em #09BC8A;
+		}
+	#user form a {
+		flex-basis: 45%;
+		font-size: .8em;
+		line-height: 2.8;
+		vertical-align: center;
+		text-align: right;
+		color: #999;
+		text-decoration: none;
+	}
+		#user form a:hover {
+			color: #09BC8A;
+		}
+		#user form a:focus {
+			outline-style: none;
+			box-shadow: 0 0 .5em #09BC8A;
+			border-radius: 5px;
+		}
+	#user form button[type="submit"] {
+		width: 100%;
+		border: none;
+		background-color: #09BC8A;
+		line-height: 2;
+		border-radius: 5px;
+		font-size: 1.5em;
+		color: white;
+	}
+		#user form button[type="submit"]:hover {
+			background-color: #03ad7d;
+		}
+		#user form button[type="submit"]:focus{
+			outline-style: none;
+			box-shadow: 0 0 .5em #999;
+		}
+
+#messages {
+	background-image: url(../img/chat-bg.jpg);
+	background-size: cover;
+	background-position: center;
+	padding: 0 .8em;
+	margin: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 83px);
+	max-width: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+	#messages li {
+		width: auto;
+		padding: .4em .6em;
+		border-radius: 10px;
+		margin: 1em 0 0 0;
+	}
+	#messages li:last-child {
+		margin-bottom: 20px !important;
+	}
+		#messages li[data-status="sent"] + li[data-status="sent"] {
+			margin: .1em 0;
+		}
+		#messages li[data-status="received"] + li[data-status="received"] {
+			margin: .1em 0;
+		}
+		#messages li:focus {
+			outline-style: none;
+			box-shadow: 0 0 10px #999;
+		}
+		#messages li[data-status="sent"]{
+			background-color: #74B3CE;
+			align-self: flex-end;
+			position: relative;
+		}
+			#messages li[data-status="sent"]:before {
+				content: '';
+				width: 0px;
+				height: 0px;
+				border-style: solid;
+				border-width: 0 0 18px 20px;
+				border-color: transparent transparent transparent #74B3CE;
+				top: 0;
+				right: -11px;
+				position: absolute;
+			}
+		#messages li[data-status="received"]{
+			background-color: #508991;
+			align-self: flex-start;
+			position: relative;
+		}
+			#messages li[data-status="received"]:before {
+				content: '';
+				width: 0px;
+				height: 0px;
+				border-style: solid;
+				border-width: 0 20px 18px 0;
+				border-color: transparent #508991 transparent transparent;
+				top: 0;
+				left: -11px;
+				position: absolute;
+			}
+			#messages li p {
+				font-size: 1.5em;
+				margin: 0 0 .3em 0;
+			}
+			#messages li header {
+				font-weight: 800;
+				font-size: 1em;
+				margin-bottom: 4px;
+			}
+			#messages li footer {
+				font-size: .6em;
+				text-align: right;
+			}
+				#messages li[data-status="sent"] footer {
+					text-align: left;
+				}
+				#messages li footer p {
+					margin: 0;
+					color: #fff;
+				}
+form {
+	display: flex;
+	flex-direction: row;
+	line-height: 2;
+}
+	form input {
+		flex-grow: 5;
+		border: 0;
+		line-height: 2;
+		outline-color: #09BC8A;
+		transition: .3s;
+		font-size: 16px;
+	}
+	form button[type="submit"]{
+		flex-grow: 1;
+		background-color: #09BC8A;
+		color: white;
+		line-height: 2;
+		font-size: 1.2em;
+		border: 0;
+	}
