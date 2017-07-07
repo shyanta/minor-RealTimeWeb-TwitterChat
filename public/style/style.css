@@ -8,18 +8,24 @@ body {
 	font: 13px Helvetica, Arial;
 	position: relative;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+    flex-wrap: wrap;
 }
 
-header h1 {
-	margin: 0;
-	padding: 0;
-	line-height: 2;
-	width: 100%;
-	text-align: center;
-	background-color: #004346;
-	color: white;
+header {
+    flex-basis: 100%;
+    width: 100%;
 }
+    header h1 {
+    	margin: 0;
+    	padding: 0;
+        font-size: 2em;
+    	line-height: 2;
+    	width: 100%;
+    	text-align: center;
+    	background-color: #004346;
+    	color: white;
+    }
 
 #connection.visible{
 	display: block;
@@ -32,6 +38,7 @@ header h1 {
 	top: 0;
 	background-color: #b72c37;
 	text-align: center;
+    flex-basis: 100%;
 	width: 100%;
 	padding: 2em 1em;
 	margin: 0 auto;
@@ -44,6 +51,7 @@ header h1 {
 
 #user.visible {
 	display: flex;
+    margin-top: 0;
 }
 #user {
 	display: none;
@@ -120,20 +128,26 @@ header h1 {
 			outline-style: none;
 			box-shadow: 0 0 .5em #999;
 		}
-
-#messages {
+#chat {
+    flex-basis: 70%;
+    width: 70%;
 	background-image: url(../img/chat-bg.jpg);
 	background-size: cover;
 	background-position: center;
+    height: calc(100vh - 4em);
+    position: relative;
+}
+#messages {
 	padding: 0 .8em;
 	margin: 0;
 	list-style: none;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 83px);
 	max-width: 100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
+    height: calc(100vh - 4em);
+    padding-bottom: 3em;
 }
 	#messages li {
 		width: auto;
@@ -205,25 +219,177 @@ header h1 {
 				#messages li footer p {
 					margin: 0;
 					color: #fff;
+                    text-align: right;
+                    margin-top: 5px;
 				}
-form {
-	display: flex;
-	flex-direction: row;
-	line-height: 2;
+            #messages .notification {
+                width: 20em;
+                border-radius: 30px;
+                font-size: 1em;
+                line-height: 2;
+                background-color: rgba(255,255,255,.8);
+                color: #000;
+                text-align: center;
+                margin: 10px auto;
+            }
+    #chat form {
+    	display: flex;
+    	flex-direction: row;
+    	line-height: 2;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    	#chat form input {
+    		flex-grow: 5;
+    		border: 0;
+    		line-height: 2;
+    		outline-color: #09BC8A;
+    		transition: .3s;
+    		font-size: 16px;
+    	}
+    	#chat form button[type="submit"]{
+    		flex-grow: 1;
+    		background-color: #09BC8A;
+    		color: white;
+    		line-height: 2;
+    		font-size: 1.2em;
+    		border: 0;
+    	}
+#tweets {
+    flex-basis: 30%;
+    width: 30%;
+    position: relative;
 }
-	form input {
-		flex-grow: 5;
-		border: 0;
-		line-height: 2;
-		outline-color: #09BC8A;
-		transition: .3s;
-		font-size: 16px;
-	}
-	form button[type="submit"]{
-		flex-grow: 1;
-		background-color: #09BC8A;
-		color: white;
-		line-height: 2;
-		font-size: 1.2em;
-		border: 0;
-	}
+#tweets form {
+    display: flex;
+    flex-direction: row;
+    line-height: 2;
+    box-shadow: 0 3px 3px #ddd;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+    #tweets form input {
+        flex-grow: 5;
+        border: 0;
+        line-height: 2;
+        outline-color: #09BC8A;
+        transition: .3s;
+        font-size: 16px;
+    }
+    #tweets form button[type="submit"]{
+        flex-grow: 1;
+        background-color: #09BC8A;
+        color: white;
+        line-height: 2;
+        font-size: 1.2em;
+        border: 0;
+    }
+    #tweets button#send-tweet {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-color: #09BC8A;
+        display: block;
+        border: 0;
+        font-size: 1.5em;
+        line-height: 2;
+        color: #fff;
+        width: 10em;
+        text-align: center;
+    }
+        #tweets button#send-tweet.hidden {
+            display: none;
+        }
+    #tweet-results {
+        height: calc(100vh - 4em);
+        overflow-y: scroll;
+        padding-top: 3em;
+        box-sizing: border-box;
+    }
+        #tweet-results li {
+            padding: 10px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 2px #ddd;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+            #tweet-results li.active {
+                background-color: #b5e5fc;
+            }
+            #tweet-results li header {
+                flex-basis: 20%;
+                width: 20%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+                #tweet-results li header img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 50%;
+                }
+            #tweet-results li .info {
+                flex-basis: 80%;
+                width: 80%;
+                padding-left: 10px;
+                height: 100%;
+                line-height: 3em;
+            }
+                #tweet-results li .info p:nth-child(1){
+                    font-weight: bold;
+                }
+                #tweet-results li .info #screen-name {
+                    color: #777;
+                    font-weight: normal;
+                }
+                #tweet-results li .info p:nth-child(2){
+                    vertical-align: middle;
+                    line-height: normal;
+                    display: inline-block;
+                }
+        #messages #tweet {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            max-width: 30em;
+            font-size: 1em;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 3px 3px 20px #548093 inset;
+        }
+            #messages #tweet .image {
+                flex-basis: 20%;
+                width: 20%;
+                padding: 10px;
+            }
+                #messages #tweet .image img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 50%;
+                }
+            #messages #tweet .info {
+                flex-basis: 80%;
+                width: 80%;
+                padding-left: 10px;
+                height: 100%;
+                line-height: 3em;
+                font-size: 10px;
+            }
+                #messages #tweet .info p:nth-child(1){
+                    font-weight: bold;
+                }
+                #messages #tweet .info #screen-name {
+                    color: #777;
+                    font-weight: normal;
+                    padding-left: 10px;
+                    font-size: 14px;
+                }
+                #messages #tweet .info p:nth-child(2){
+                    vertical-align: middle;
+                    line-height: normal;
+                    display: inline-block;
+                }

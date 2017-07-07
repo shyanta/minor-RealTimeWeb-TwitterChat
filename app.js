@@ -33,9 +33,7 @@ var twitter = new Twit({
   access_token_secret: process.env.TWITTER_TOKEN_SECRET
 });
 
-// twitter.get('search/tweets', { q: query + ' since:2011-07-11', count: 100 }, function(err, data, response) {
-//     console.log(data)
-// })
+
 
 io.on('connection', function(socket){
     socket.on('notification', function(username, status) {
@@ -46,9 +44,17 @@ io.on('connection', function(socket){
         console.log('a user ' + status);
         io.emit('notification', username, status)
     });
-	socket.on('chat message', function(msg, name){
-		io.emit('chat message', msg, name, this.id);
-		console.log('message: ' + msg);
+    socket.on('search tweet', function(query){
+        twitter.get('search/tweets', { q: query + ' since:2011-07-16', count: 100 }, function(err, data, response) {
+            if (err){
+                console.log(err);
+            } else {
+                io.emit('tweets', data)
+            }
+        })
+    })
+	socket.on('chat message', function(msg, name, type){
+		io.emit('chat message', msg, name, this.id, type);
 	});
 });
 
