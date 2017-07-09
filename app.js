@@ -39,17 +39,17 @@ io.on('connection', function(socket){
     socket.on('notification', function(username, status) {
         socket.on('disconnect', function() {
             console.log('a user disconnected');
-            io.emit('notification', username, 'left')
+            socket.broadcast.emit('notification', username, 'left')
         });
         console.log('a user ' + status);
-        io.emit('notification', username, status)
+        socket.broadcast.emit('notification', username, status)
     });
     socket.on('search tweet', function(query){
         twitter.get('search/tweets', { q: query + ' since:2011-07-16', count: 100 }, function(err, data, response) {
             if (err){
                 console.log(err);
             } else {
-                client.emit('tweets', data)
+                socket.emit('tweets', data)
             }
         })
     })
