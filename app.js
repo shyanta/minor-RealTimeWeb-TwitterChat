@@ -49,7 +49,7 @@ io.on('connection', function(socket){
             if (err){
                 console.log(err);
             } else {
-                io.emit('tweets', data)
+                client.emit('tweets', data)
             }
         })
     })

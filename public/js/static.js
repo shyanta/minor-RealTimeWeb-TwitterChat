@@ -72,7 +72,8 @@ socket.on('disconnect', function() {
 })
 
 socket.on('notification', function(name, status) {
-    messages.innerHTML += '<span class="notification">' + name + ' '+ status + ' the room</span>'
+    messages.innerHTML += '<span class="notification">' + name + ' '+ status + ' the room</span>';    
+	messages.scrollTop = messages.scrollHeight;
 })
 
 socket.on('tweets', function(data){
