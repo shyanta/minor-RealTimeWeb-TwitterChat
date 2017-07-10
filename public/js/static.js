@@ -72,7 +72,7 @@ socket.on('disconnect', function() {
 })
 
 socket.on('notification', function(name, status) {
-    messages.innerHTML += '<span class="notification">' + name + ' '+ status + ' the room</span>';    
+    messages.innerHTML += '<span class="notification">' + name + ' '+ status + ' the room</span>';
 	messages.scrollTop = messages.scrollHeight;
 })
 
@@ -98,6 +98,7 @@ socket.on('chat message', function(msg, name, id, type){
 	var status;
 		if (socket.id === id) {
 			status = "sent";
+            name = "U";
 		} else {
 			status = "received";
 		}
@@ -113,7 +114,7 @@ socket.on('chat message', function(msg, name, id, type){
 			minute = '' + d.getMinutes();
 		}
     if (type === 'chat'){
-    	messages.innerHTML += '<li data-status="' + status + '"><header>'+ name + ' says:</header><p>' + msg + '</p><footer><p> Posted on '+ days[day] + ', ' + hour + ':' + minute + '</footer></li>';
+    	messages.innerHTML += '<li data-status="' + status + '"><header>'+ name + ':</header><p>' + msg + '</p><footer><p> Posted on '+ days[day] + ', ' + hour + ':' + minute + '</footer></li>';
     } else if (type === 'tweet'){
     	messages.innerHTML += '<li data-status="' + status + '"><header>'+ name + ' says:</header><div id="tweet"><div class="image"><img src="' + msg.img + '"/></div><div class="info"><p>'+ msg.name +'<span id="screen-name">'+ msg.mention +'</span><p id="tweet-body">' + msg.body  + '</p></div></div><footer><p> Posted on '+ days[day] + ', ' + hour + ':' + minute + '</footer></li>';
     }
