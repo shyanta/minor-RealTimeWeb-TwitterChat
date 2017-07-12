@@ -150,6 +150,7 @@ socket.on('chat message', function(msg, name, id, type){
 		} else {
 			minute = '' + d.getMinutes();
 		}
+        //textcontent
     if (type === 'chat'){
     	messages.innerHTML += '<li data-status="' + status + '"><header>'+ name + ':</header><p>' + msg + '</p><footer><p> Posted on '+ days[day] + ', ' + hour + ':' + minute + '</footer></li>';
     } else if (type === 'tweet'){

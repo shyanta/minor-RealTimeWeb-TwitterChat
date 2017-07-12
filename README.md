@@ -42,6 +42,7 @@ find a tweet that actually says, what you want to say. This to make the chat a b
 
 ## Known Bugs
 -   Notifications when someone enters or leavers the room, isn't working smoothly in the different rooms.
+-   When a user leaves, and joines another room.
 
 ## How to install the project
 ### Create an app
