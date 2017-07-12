@@ -36,26 +36,32 @@ var twitter = new Twit({
 
 
 io.on('connection', function(socket){
-    socket.on('notification', function(username, status) {
-        socket.on('disconnect', function() {
-            console.log('a user disconnected');
-            socket.broadcast.emit('notification', username, 'left')
+    socket.on('join room', function(room){
+        socket.join(room);
+        socket.on('notification', function(username, status) {
+            socket.on('disconnect', function() {
+                console.log('a user disconnected');
+                socket.broadcast.to(room).emit('notifications', username, 'left')
+            });
+            console.log('a user ' + status);
+            socket.broadcast.to(room).emit('notifications', username, status)
         });
-        console.log('a user ' + status);
-        socket.broadcast.emit('notification', username, status)
-    });
-    socket.on('search tweet', function(query){
-        twitter.get('search/tweets', { q: query + ' since:2011-07-16', count: 100 }, function(err, data, response) {
-            if (err){
-                console.log(err);
-            } else {
-                socket.emit('tweets', data)
-            }
+        socket.on('search tweet', function(query){
+            twitter.get('search/tweets', { q: query + ' since:2011-07-16', count: 100 }, function(err, data, response) {
+                if (err){
+                    console.log(err);
+                } else {
+                    io.to(room).emit('tweets', data)
+                }
+            })
+        })
+    	socket.on('chat message', function(msg, name, type){
+    		io.to(room).emit('chat message', msg, name, this.id, type);
+    	});
+        socket.on('leave room', function(room){
+            socket.leave(room);
         })
     })
-	socket.on('chat message', function(msg, name, type){
-		io.emit('chat message', msg, name, this.id, type);
-	});
 });
 
 http.listen(process.env.PORT || 3000, function(req, res){

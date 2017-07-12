@@ -21,11 +21,20 @@ header {
     	padding: 0;
         font-size: 2em;
     	line-height: 2;
+        height: 2em;
     	width: 100%;
     	text-align: center;
     	background-color: #004346;
     	color: white;
     }
+#logged-in {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    color: white;
+    line-height: 4em;
+    font-size: 1em;
+}
 
 #connection.visible{
 	display: block;
@@ -130,6 +139,110 @@ header {
 			outline-style: none;
 			box-shadow: 0 0 .5em #999;
 		}
+#rooms.visible {
+	display: flex;
+    margin-top: 0;
+}
+#rooms {
+	display: none;
+	align-items: center;
+	height: 100%;
+	height: 100vh;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,0.4)
+}
+#rooms form{
+	background-color: #dae1e5;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	border-radius: 10px;
+	width: 85%;
+	max-width: 20em;
+	/*padding: 1em;*/
+	margin: 0 auto;
+}
+	#rooms form label {
+        text-align: center;
+        display: block;
+        box-shadow: 0 2px 2px #ddd;
+		flex-basis: 100%;
+		font-size: 1.5em;
+        line-height: 2em;
+        font-weight: bold;
+		margin-bottom: .2em;
+    	border-radius: 10px 10px 0 0;
+        background-color: rgba(255, 255, 255, 0.9);
+	}
+        #rooms form p {
+            padding: 0 1em;
+        }
+            #rooms form p:nth-of-type(1) {
+                font-size: 1.2em;
+                text-align: left;
+            }
+            #rooms form p span {
+                text-align: left;
+                font-size: 1.1em;
+                font-weight: bold;
+                text-decoration: underline;
+                display: block;
+            }
+	#rooms form select {
+		flex-basis: 100%;
+		line-height: 2;
+		font-size: 16px;
+		height: 2em;
+		border: 0;
+		border-radius: 5px;
+        padding-left: 5px;
+        margin: 10px 1em .8em 1em;
+        box-sizing: border-box;
+	}
+		#rooms form select:focus,
+        #rooms form select:hover{
+			outline-style: none;
+			box-shadow: 0 0 .5em #09BC8A;
+		}
+	#rooms form button[type="submit"] {
+		width: 100%;
+		border: none;
+		background-color: #09BC8A;
+		line-height: 2;
+		border-radius: 5px;
+		font-size: 1.5em;
+		color: white;
+        border-radius: 0 0 10px 10px;
+	}
+		#rooms form button[type="submit"]:hover {
+			background-color: #03ad7d;
+		}
+		#rooms form button[type="submit"]:focus{
+			outline-style: none;
+			box-shadow: 0 0 .5em #999;
+		}
+#leave-room.hidden {
+    display: none;
+}
+#leave-room {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2.7em;
+    width: 10em;
+    text-align: center;
+    background-color: #03ad7d;
+    color: white;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+}
 #chat {
     flex-basis: 70%;
     width: 70%;
@@ -250,6 +363,8 @@ header {
     		outline-color: #09BC8A;
     		transition: .3s;
     		font-size: 16px;
+            padding-left: 5px;
+            box-sizing: border-box;
     	}
     	#chat form button[type="submit"]{
     		flex-grow: 1;
@@ -263,6 +378,7 @@ header {
     flex-basis: 30%;
     width: 30%;
     position: relative;
+    overflow-x: hidden;
 }
 #tweets form {
     display: flex;

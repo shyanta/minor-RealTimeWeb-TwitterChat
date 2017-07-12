@@ -1,7 +1,7 @@
 <%- include('./partials/head.ejs') %>
 <section id="tweets">
     <form action="" id="tweet_form">
-    	<input type="type" name="tweet-query" id="tweet-query" autocomplete="off">
+    	<input type="text" name="tweet-query" id="tweet-query" autocomplete="off">
     	<button type="submit">Search for tweets</button>
     </form>
     <ul id="tweet-results"></ul>
@@ -11,7 +11,7 @@
 <section id="chat">
     <ul id="messages"></ul>
     <form action="" id="message_form">
-    	<input type="type" name="field-message" id="field-message" autocomplete="off" minlength="1">
+    	<input type="text" name="field-message" id="field-message" autocomplete="off" minlength="1">
     	<button type="submit">Send</button>
     </form>
 </section>
@@ -24,11 +24,28 @@
 	</form>
 </section>
 
+<section id="rooms" class="visible">
+	<form action="/" id="room_form">
+		<label for="room">Rooms</label>
+        <p>What subject do you want to talk about in this twitter-chat?</p>
+        <p><span>Remember:</span> Talk with tweets only as much as you can</p>
+		<select id="room" name="room">
+		    <option value="Programming">Programming</option>
+		    <option value="Designing">Designing</option>
+		    <option value="Writing">Writing</option>
+            <option value="Reading">Reading</option>
+		</select>
+		<button type="submit">Start</button>
+	</form>
+</section>
+
 <section id="connection">
 	<p>
 		Ah oh, it seems like your connection failed...<br/>
 		Are you in a tunnel?? We will keep on trying to connect for you.
 	</p>
 </section>
+
+<button type="button" id="leave-room" name="button">Leave Room</button>
 
 <%- include('./partials/foot.ejs') %>

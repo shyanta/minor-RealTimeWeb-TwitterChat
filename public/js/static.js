@@ -11,25 +11,59 @@ var sendTweet = document.getElementById('send-tweet');
 var userNameInput = document.getElementById('username');
 var userSection = document.getElementById('user');
 var userForm = document.getElementById('user_form');
+var loggedIn = document.getElementById('logged-in');
+// Variable for chatRoom
+var roomChoice = document.getElementById('room');
+var roomSection = document.getElementById('rooms');
+var roomForm = document.getElementById('room_form');
+var leaveRoom = document.getElementById('leave-room');
+// Variable for H1 in header
+var title = document.getElementsByTagName('h1')[0];
 // Variable for connection bar
 var noConnection = document.getElementById('connection');
 
+// Setup global variables to save data in for later
+var room = "";
 var username ="";
 var socket = io();
+// Set classes to the sections and buttons
 userSection.setAttribute("class", "");
+roomSection.setAttribute("class", "");
 sendTweet.setAttribute('class', 'hidden');
+leaveRoom.setAttribute('class', 'hidden');
+loggedIn.setAttribute('class', 'hidden');
 
 if (username === ""){
 	userSection.setAttribute("class", "visible");
+    loggedIn.querySelector('p').innerText = 'Not logged In';
 	userForm.addEventListener('submit', function(){
 		event.preventDefault();
 		username = userNameInput.value;
 		userNameInput.value="";
 		userSection.setAttribute("class","");
-        var status = 'joined';
-        socket.emit('notification', username, status);
+        roomSection.setAttribute("class", "visible");
+        loggedIn.removeAttribute('class');
+
+        loggedIn.querySelector('p').innerText = 'Logged in as: ' + username;
 	})
 }
+roomSection.addEventListener('submit' , function(){
+    event.preventDefault();
+    room = roomChoice.value;
+    leaveRoom.removeAttribute('class');
+    roomSection.setAttribute("class", "");
+    title.innerText = 'Twitter-chatroom: ' + room;
+    socket.emit('join room', room);
+    var status = 'joined';
+    socket.emit('notification', username, status);
+})
+leaveRoom.addEventListener('click', function() {
+    socket.emit('leave room', room);
+    title.innerText = 'Twitter-chatroom';
+    roomSection.setAttribute("class", "visible");
+    var status = 'left';
+    socket.emit('notification', username, status);
+})
 tweetForm.addEventListener('submit', function(){
     event.preventDefault();
     socket.emit('search tweet', query.value);
@@ -38,7 +72,8 @@ tweetForm.addEventListener('submit', function(){
 
 messageForm.addEventListener('submit', function(){
 	event.preventDefault();
-	socket.emit('chat message', message.value, username, 'chat');
+    messageVal = message.value.replace('>', '!>').replace('<', '<!')
+	socket.emit('chat message', messageVal, username, 'chat');
 	message.value = "";
 	return false;
 });
@@ -60,7 +95,7 @@ sendTweet.addEventListener('click', function(){
 
 socket.on('connect', function(){
     var status = 'joined';
-    if (username !== ""){
+    if (username !== "" && room !== ""){
         socket.emit('notification', username, status);
     }
 	noConnection.removeAttribute("class", "visible");
@@ -71,7 +106,7 @@ socket.on('disconnect', function() {
     socket.emit('notification', username, status);
 })
 
-socket.on('notification', function(name, status) {
+socket.on('notifications', function(name, status) {
     messages.innerHTML += '<span class="notification">' + name + ' '+ status + ' the room</span>';
 	messages.scrollTop = messages.scrollHeight;
 })
