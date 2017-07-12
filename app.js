@@ -33,34 +33,30 @@ var twitter = new Twit({
   access_token_secret: process.env.TWITTER_TOKEN_SECRET
 });
 
-
-
 io.on('connection', function(socket){
-    socket.on('join room', function(room){
+    socket.on('disconnected', function(room, user) {
+        console.log( user + ' disconnected');
+        socket.broadcast.to(room).emit('notifications', user, 'left the room');
+    });
+    socket.on('join room', function(room, user){
         socket.join(room);
-        socket.on('notification', function(username, status) {
-            socket.on('disconnect', function() {
-                console.log('a user disconnected');
-                socket.broadcast.to(room).emit('notifications', username, 'left')
-            });
-            console.log('a user ' + status);
-            socket.broadcast.to(room).emit('notifications', username, status)
-        });
+        socket.broadcast.to(room).emit('notifications', user, 'joined the room')
         socket.on('search tweet', function(query){
-            twitter.get('search/tweets', { q: query + ' since:2011-07-16', count: 100 }, function(err, data, response) {
+            twitter.get('search/tweets', { q: query, count: 100 }, function(err, data, response) {
                 if (err){
                     console.log(err);
                 } else {
-                    io.to(room).emit('tweets', data)
+                    socket.emit('tweets', data)
                 }
             })
         })
     	socket.on('chat message', function(msg, name, type){
     		io.to(room).emit('chat message', msg, name, this.id, type);
     	});
-        socket.on('leave room', function(room){
-            socket.leave(room);
-        })
+    })
+    socket.on('leave room', function(room, user){
+        socket.leave(room);
+        socket.broadcast.to(room).emit('notifications', user, 'left the room');
     })
 });
 

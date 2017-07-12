@@ -53,16 +53,18 @@ roomSection.addEventListener('submit' , function(){
     leaveRoom.removeAttribute('class');
     roomSection.setAttribute("class", "");
     title.innerText = 'Twitter-chatroom: ' + room;
-    socket.emit('join room', room);
-    var status = 'joined';
-    socket.emit('notification', username, status);
+    socket.emit('join room', room, username);
+    messages.innerHTML = "";
+    // var status = 'joined';
+    // socket.emit('notification', username, status);
 })
 leaveRoom.addEventListener('click', function() {
-    socket.emit('leave room', room);
+    socket.emit('leave room', room, username);
+    room = "";
     title.innerText = 'Twitter-chatroom';
     roomSection.setAttribute("class", "visible");
-    var status = 'left';
-    socket.emit('notification', username, status);
+    // var status = 'left';
+    // socket.emit('notification', username, status);
 })
 tweetForm.addEventListener('submit', function(){
     event.preventDefault();
@@ -94,20 +96,20 @@ sendTweet.addEventListener('click', function(){
 })
 
 socket.on('connect', function(){
-    var status = 'joined';
-    if (username !== "" && room !== ""){
-        socket.emit('notification', username, status);
+    var status = 'joined the room';
+    if (username !== ""){
+        socket.emit('join room', room, username);
+        // socket.emit('notification', username);
     }
 	noConnection.removeAttribute("class", "visible");
 })
 socket.on('disconnect', function() {
 	noConnection.setAttribute("class", "visible");
-    var status = 'left';
-    socket.emit('notification', username, status);
+    socket.emit('disconnected', room, username);
 })
 
 socket.on('notifications', function(name, status) {
-    messages.innerHTML += '<span class="notification">' + name + ' '+ status + ' the room</span>';
+    messages.innerHTML += '<span class="notification">' + name + ' '+ status + '</span>';
 	messages.scrollTop = messages.scrollHeight;
 })
 
